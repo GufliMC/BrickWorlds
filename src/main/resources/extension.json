@@ -1,0 +1,5 @@
+{
+  "entrypoint": "com.gufli.brickworlds.BrickWorlds",
+  "name": "BrickWorlds",
+  "version": "1.0.0"
+}
