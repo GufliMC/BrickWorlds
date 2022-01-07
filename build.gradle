@@ -1,34 +1,32 @@
 plugins {
     id 'java'
-    id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
 group 'com.gufli.brickworlds.BrickWorlds'
 version '1.0-SNAPSHOT'
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'com.gufli.brickworlds.BrickWorlds'
+compileJava {
+    sourceCompatibility = 1.17
+    targetCompatibility = 1.17
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.17
+    targetCompatibility = 1.17
+
+    group = parent.group;
+    version = parent.version;
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
     }
-}
 
-repositories {
-    mavenCentral()
-    maven { url 'https://repo.spongepowered.org/maven' }
-    maven { url 'https://jitpack.io' }
-}
+    repositories {
+        mavenCentral()
 
-dependencies {
-    compileOnly 'com.github.Minestom:Minestom:-SNAPSHOT'
-}
-
-shadowJar {
-    archiveClassifier.set("")
-
-    doLast {
-        copy {
-            from "build/libs/" + archiveFileName.get()
-            into "../Brick/extensions"
-        }
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://repo.spongepowered.org/maven' }
     }
 }
