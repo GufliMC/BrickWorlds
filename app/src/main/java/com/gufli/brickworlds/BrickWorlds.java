@@ -65,6 +65,7 @@ public class BrickWorlds extends Extension {
         }
 
         if ( defaultWorld.isPresent() ) {
+            getLogger().info("Setting world '" + defaultWorld.get().worldInfo().name() + "' as default.");
             eventListeners.add(new PlayerJoinListener(defaultWorld.get()));
             eventListeners.add(new PlayerSpawnListener(defaultWorld.get()));
         }

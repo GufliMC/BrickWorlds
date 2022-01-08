@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'com.gufli.brickworlds.BrickWorlds'
+group 'com.gufli.brickworlds'
 version '1.0-SNAPSHOT'
 
 compileJava {

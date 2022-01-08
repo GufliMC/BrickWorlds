@@ -41,8 +41,8 @@ public class WorldInstanceContainer extends InstanceContainer implements World {
 
     @Override
     public void save() {
-        saveInstance();
-        saveChunksToStorage();
+        //saveInstance();
+        //saveChunksToStorage(); // TODO corrupts with AnvilLoader
         worldInfo.save();
     }
 
