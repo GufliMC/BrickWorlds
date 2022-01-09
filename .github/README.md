@@ -41,7 +41,7 @@ Change the default world. This is the world players will spawn in. Must be prese
 }
 ```
 
-Change autosave interval in minutes.
+Change autosave interval in minutes. Use 0 to disable autosaving.
 ```json
 {
   "autoSaveInterval": 10

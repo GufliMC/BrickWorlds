@@ -86,13 +86,14 @@ public class BrickWorlds extends Extension {
         CommandManager commandManager = MinecraftServer.getCommandManager();
         commands.forEach(commandManager::register);
 
-        // start autosaving
+        // autosaving
         int minutes = config.autoSaveInterval();
-        if ( minutes < 1 ) minutes = 10;
-        Duration interval = Duration.of(minutes, ChronoUnit.MINUTES);
-        autoSaveTask = MinecraftServer.getSchedulerManager().buildTask(worldManager::saveAll)
-                .delay(interval).repeat(interval)
-                .executionType(ExecutionType.ASYNC).schedule();
+        if ( minutes > 0 ) {
+            Duration interval = Duration.of(minutes, ChronoUnit.MINUTES);
+            autoSaveTask = MinecraftServer.getSchedulerManager().buildTask(worldManager::saveAll)
+                    .delay(interval).repeat(interval)
+                    .executionType(ExecutionType.ASYNC).schedule();
+        }
 
         getLogger().info("Enabled " + nameAndVersion() + ".");
     }
