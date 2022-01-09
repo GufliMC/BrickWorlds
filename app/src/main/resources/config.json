@@ -1,5 +1,6 @@
 {
   "defaultWorld": "world",
+  "autoSaveInterval": "10",
   "loadOnStartup": [
     "world"
   ]

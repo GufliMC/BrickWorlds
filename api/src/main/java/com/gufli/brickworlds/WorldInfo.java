@@ -1,17 +1,32 @@
 package com.gufli.brickworlds;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
+import net.minestom.server.coordinate.Pos;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class WorldInfo {
 
-    private final static Gson gson = new Gson();
+    private final static JsonDeserializer<Pos> posDeserializer = (json, typeOfT, context) -> {
+        JsonObject obj = json.getAsJsonObject();
+        return new Pos(
+                obj.get("x").getAsDouble(),
+                obj.get("y").getAsDouble(),
+                obj.get("z").getAsDouble(),
+                obj.get("yaw").getAsFloat(),
+                obj.get("pitch").getAsFloat()
+        );
+    };
+
+    private final static Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Pos.class, posDeserializer)
+            .create();
 
     //
 
@@ -21,6 +36,7 @@ public class WorldInfo {
     private String generator;
     private List<Object> generatorArgs;
     private List<String> authors;
+    private Pos spawn;
 
     private WorldInfo() {}
 
@@ -53,6 +69,14 @@ public class WorldInfo {
     public void setGenerator(String generator, List<Object> generatorArgs) {
         setGenerator(generator);
         this.generatorArgs = generatorArgs;
+    }
+
+    public Pos spawn() {
+        return spawn;
+    }
+
+    public void setSpawn(Pos pos) {
+        this.spawn = pos;
     }
 
     //
@@ -92,4 +116,5 @@ public class WorldInfo {
         info.file = file;
         return info;
     }
+
 }

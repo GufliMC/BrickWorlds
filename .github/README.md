@@ -13,9 +13,13 @@ Worlds are stored in the `worlds` directory at the root of your server.
 
 Don't worry, console can execute all commands ;)
 
-| Command      | Permission           |
-|--------------|----------------------|
-| /bw save-all | brickworlds.save-all |
+| Command              | Permission           |
+|----------------------|----------------------|
+| /bw save-all         | brickworlds.save-all |
+| /bw save (world)     | brickworlds.save     |
+| /bw load (world)     | brickworlds.load     |
+| /bw setspawn         | brickworlds.setspawn |
+| /bw teleport (world) | brickworlds.teleport |
 
 ## Config
 
@@ -34,6 +38,13 @@ Change the default world. This is the world players will spawn in. Must be prese
 ```json
 {
   "defaultWorld": "world"
+}
+```
+
+Change autosave interval in minutes.
+```json
+{
+  "autoSaveInterval": 10
 }
 ```
 

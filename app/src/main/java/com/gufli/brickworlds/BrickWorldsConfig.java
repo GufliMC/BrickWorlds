@@ -6,6 +6,7 @@ public class BrickWorldsConfig {
 
     private String defaultWorld;
     private List<String> loadOnStartup;
+    private int autoSaveInterval;
 
     public String defaultWorld() {
         return defaultWorld;
@@ -13,6 +14,10 @@ public class BrickWorldsConfig {
 
     public List<String> loadOnStartup() {
         return loadOnStartup;
+    }
+
+    public int autoSaveInterval() {
+        return autoSaveInterval;
     }
 
 }

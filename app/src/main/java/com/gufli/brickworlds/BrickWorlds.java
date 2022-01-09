@@ -11,11 +11,15 @@ import net.minestom.server.command.builder.Command;
 import net.minestom.server.event.EventListener;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.extensions.Extension;
+import net.minestom.server.timer.ExecutionType;
+import net.minestom.server.timer.Task;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -29,6 +33,8 @@ public class BrickWorlds extends Extension {
     private final Set<Command> commands = new HashSet<>();
 
     private BrickWorldManager worldManager;
+
+    private Task autoSaveTask;
 
     @Override
     public void initialize() {
@@ -80,6 +86,14 @@ public class BrickWorlds extends Extension {
         CommandManager commandManager = MinecraftServer.getCommandManager();
         commands.forEach(commandManager::register);
 
+        // start autosaving
+        int minutes = config.autoSaveInterval();
+        if ( minutes < 1 ) minutes = 10;
+        Duration interval = Duration.of(minutes, ChronoUnit.MINUTES);
+        autoSaveTask = MinecraftServer.getSchedulerManager().buildTask(worldManager::saveAll)
+                .delay(interval).repeat(interval)
+                .executionType(ExecutionType.ASYNC).schedule();
+
         getLogger().info("Enabled " + nameAndVersion() + ".");
     }
 
@@ -87,6 +101,10 @@ public class BrickWorlds extends Extension {
     public void terminate() {
         if (worldManager != null) {
             worldManager.shutdown();
+        }
+
+        if ( autoSaveTask != null ) {
+            autoSaveTask.cancel();
         }
 
         // unregister listeners

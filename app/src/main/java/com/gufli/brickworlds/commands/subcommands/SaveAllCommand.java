@@ -1,4 +1,4 @@
-package com.gufli.brickworlds.commands;
+package com.gufli.brickworlds.commands.subcommands;
 
 import com.gufli.brickworlds.BrickWorldManager;
 import net.kyori.adventure.text.Component;
@@ -19,7 +19,7 @@ public class SaveAllCommand extends Command {
 
         // condition
         setCondition((sender, commandString) -> sender instanceof ConsoleSender ||
-                sender.hasPermission("brickworlds.save-alll"));
+                sender.hasPermission("brickworlds.save-all"));
 
         // usage
         setDefaultExecutor(this::execute);

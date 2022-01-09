@@ -3,39 +3,38 @@ package com.gufli.brickworlds;
 import com.gufli.brickworlds.generators.VoidGenerator;
 import com.gufli.brickworlds.world.WorldInstanceContainer;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.instance.*;
-import net.minestom.server.timer.ExecutionType;
-import net.minestom.server.timer.Task;
+import net.minestom.server.instance.InstanceManager;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class BrickWorldManager implements WorldManager {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(BrickWorldManager.class);
 
     private final File worldsDirectory;
-    private final Task task;
 
     private final InstanceManager instanceManager = MinecraftServer.getInstanceManager();
 
     public BrickWorldManager(File worldsDirectory) {
         this.worldsDirectory = worldsDirectory;
-
-        Duration interval = Duration.of(10, ChronoUnit.MINUTES);
-        task = MinecraftServer.getSchedulerManager().buildTask(this::saveAll)
-                .delay(interval).repeat(interval)
-                .executionType(ExecutionType.ASYNC).schedule();
     }
 
     void shutdown() {
-        task.cancel();
         saveAll();
+    }
+
+    @Override
+    public Collection<World> worlds() {
+        return instanceManager.getInstances().stream()
+                .filter(inst -> inst instanceof World)
+                .map(inst -> (World) inst)
+                .collect(Collectors.toSet());
     }
 
     @Override
@@ -68,7 +67,7 @@ public class BrickWorldManager implements WorldManager {
 
     @Override
     public World createWorld(@NotNull String name, @NotNull WorldGenerator generator) {
-        if ( worldByName(name).isPresent() ) {
+        if (worldByName(name).isPresent()) {
             throw new IllegalArgumentException("A world with that name already exists.");
         }
 
@@ -76,7 +75,7 @@ public class BrickWorldManager implements WorldManager {
 
         File directory = new File(worldsDirectory, name);
         int index = 0;
-        while ( directory.exists() ) {
+        while (directory.exists()) {
             directory = new File(worldsDirectory, name + "-" + (++index));
         }
 
@@ -95,7 +94,7 @@ public class BrickWorldManager implements WorldManager {
 
     @Override
     public World loadWorld(@NotNull File directory) {
-        if ( !directory.exists() ) {
+        if (!directory.exists()) {
             throw new IllegalArgumentException("A world with that name does not exist.");
         }
 
@@ -109,21 +108,21 @@ public class BrickWorldManager implements WorldManager {
 
     public World loadWorld(@NotNull String name) {
         File[] files = worldsDirectory.listFiles();
-        if ( files == null ) {
-           throw new IllegalStateException("Worlds directory does not exist.");
+        if (files == null) {
+            throw new IllegalStateException("Worlds directory does not exist.");
         }
 
         // find by world info
-        for ( File directory : files ) {
+        for (File directory : files) {
             WorldInfo info = WorldInfo.of(infoFile(directory));
-            if ( info.name().equalsIgnoreCase(name) ) {
+            if (info.name().equalsIgnoreCase(name)) {
                 return loadWorld(directory);
             }
         }
 
         // find by directory name
-        for ( File directory : files ) {
-            if ( directory.getName().equalsIgnoreCase(name) ) {
+        for (File directory : files) {
+            if (directory.getName().equalsIgnoreCase(name)) {
                 return loadWorld(directory);
             }
         }

@@ -3,9 +3,12 @@ package com.gufli.brickworlds;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.Optional;
 
 public interface WorldManager {
+
+    Collection<World> worlds();
 
     Optional<World> worldByName(String name);
 
