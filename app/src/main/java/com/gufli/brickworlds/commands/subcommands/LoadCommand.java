@@ -22,7 +22,9 @@ public class LoadCommand extends Command {
 
         // condition
         setCondition((sender, commandString) -> sender instanceof ConsoleSender ||
-                sender.hasPermission("brickworlds.load"));
+                sender.hasPermission("brickworlds.load") ||
+                (sender instanceof Player p && p.getPermissionLevel() == 4)
+            );
 
         ArgumentWord world = new ArgumentWord("world");
 

@@ -4,10 +4,8 @@ import com.gufli.brickworlds.BrickWorldManager;
 import com.gufli.brickworlds.World;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.command.CommandSender;
-import net.minestom.server.command.ConsoleSender;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.CommandContext;
-import net.minestom.server.command.builder.arguments.Argument;
 import net.minestom.server.command.builder.arguments.ArgumentWord;
 import net.minestom.server.entity.Player;
 
@@ -22,8 +20,10 @@ public class TeleportCommand extends Command {
         this.worldManager = worldManager;
 
         // condition
-        setCondition((sender, commandString) -> sender instanceof Player &&
-                sender.hasPermission("brickworlds.teleport"));
+        setCondition((sender, commandString) -> sender instanceof Player p && (
+                p.hasPermission("brickworlds.teleport") ||
+                p.getPermissionLevel() == 4
+        ));
 
         ArgumentWord world = new ArgumentWord("world")
                 .from(worldManager.worlds().stream().map(w -> w.worldInfo().name()).toArray(String[]::new));

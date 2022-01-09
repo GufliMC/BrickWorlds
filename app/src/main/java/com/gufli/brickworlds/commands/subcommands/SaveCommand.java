@@ -22,7 +22,9 @@ public class SaveCommand extends Command {
 
         // condition
         setCondition((sender, commandString) -> sender instanceof ConsoleSender ||
-                sender.hasPermission("brickworlds.save"));
+                sender.hasPermission("brickworlds.save") ||
+                (sender instanceof Player p && p.getPermissionLevel() == 4)
+        );
 
         ArgumentWord world = new ArgumentWord("world")
                 .from(worldManager.worlds().stream().map(w -> w.worldInfo().name()).toArray(String[]::new));

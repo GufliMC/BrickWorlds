@@ -1,16 +1,12 @@
 package com.gufli.brickworlds.commands.subcommands;
 
 import com.gufli.brickworlds.BrickWorldManager;
-import com.gufli.brickworlds.World;
 import com.gufli.brickworlds.world.WorldInstanceContainer;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.CommandContext;
-import net.minestom.server.command.builder.arguments.ArgumentWord;
 import net.minestom.server.entity.Player;
-
-import java.util.Optional;
 
 public class SetSpawnCommand extends Command {
 
@@ -21,8 +17,11 @@ public class SetSpawnCommand extends Command {
         this.worldManager = worldManager;
 
         // condition
-        setCondition((sender, commandString) -> sender instanceof Player &&
-                sender.hasPermission("brickworlds.setspawn"));
+        setCondition((sender, commandString) -> sender instanceof Player p && (
+                        p.hasPermission("brickworlds.setspawn") ||
+                        p.getPermissionLevel() == 4
+                )
+        );
 
         // usage
         setDefaultExecutor((sender, context) -> {
@@ -36,7 +35,7 @@ public class SetSpawnCommand extends Command {
     private void execute(CommandSender sender, CommandContext context) {
         Player player = (Player) sender;
 
-        if ( !(player.getInstance() instanceof WorldInstanceContainer wic) ) {
+        if (!(player.getInstance() instanceof WorldInstanceContainer wic)) {
             sender.sendMessage("Your current world is not being tracked.");
             return;
         }

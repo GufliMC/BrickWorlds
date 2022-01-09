@@ -7,7 +7,6 @@ import net.minestom.server.command.ConsoleSender;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.CommandContext;
 import net.minestom.server.entity.Player;
-import net.minestom.server.item.ItemStack;
 
 public class SaveAllCommand extends Command {
 
@@ -19,7 +18,9 @@ public class SaveAllCommand extends Command {
 
         // condition
         setCondition((sender, commandString) -> sender instanceof ConsoleSender ||
-                sender.hasPermission("brickworlds.save-all"));
+                sender.hasPermission("brickworlds.save-all") ||
+                (sender instanceof Player p && p.getPermissionLevel() == 4)
+        );
 
         // usage
         setDefaultExecutor(this::execute);
