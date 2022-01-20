@@ -1,14 +1,14 @@
 package com.gufli.brickworlds.commands.subcommands;
 
+import com.gufli.brickutils.commands.BrickCommand;
+import com.gufli.brickutils.translation.TranslationManager;
 import com.gufli.brickworlds.BrickWorldManager;
 import com.gufli.brickworlds.world.WorldInstanceContainer;
-import net.kyori.adventure.text.Component;
 import net.minestom.server.command.CommandSender;
-import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.CommandContext;
 import net.minestom.server.entity.Player;
 
-public class SetSpawnCommand extends Command {
+public class SetSpawnCommand extends BrickCommand {
 
     private final BrickWorldManager worldManager;
 
@@ -17,16 +17,10 @@ public class SetSpawnCommand extends Command {
         this.worldManager = worldManager;
 
         // condition
-        setCondition((sender, commandString) -> sender instanceof Player p && (
-                        p.hasPermission("brickworlds.setspawn") ||
-                        p.getPermissionLevel() == 4
-                )
-        );
+        setCondition(b -> b.permission("brickworlds.setspawn"));
 
         // usage
-        setDefaultExecutor((sender, context) -> {
-            sender.sendMessage("Usage: /bw setspawn"); // TODO
-        });
+        setInvalidUsageMessage("cmd.setspawn.usage");
 
         // syntax
         addSyntax(this::execute);
@@ -36,13 +30,13 @@ public class SetSpawnCommand extends Command {
         Player player = (Player) sender;
 
         if (!(player.getInstance() instanceof WorldInstanceContainer wic)) {
-            sender.sendMessage("Your current world is not being tracked.");
+            TranslationManager.get().send(sender, "cmd.setspawn.invalid");
             return;
         }
 
         wic.worldInfo().setSpawn(player.getPosition());
         wic.worldInfo().save();
 
-        sender.sendMessage(Component.text("The spawn of this world has been set to your current location."));
+        TranslationManager.get().send(sender, "cmd.setspawn", wic.worldInfo().name());
     }
 }

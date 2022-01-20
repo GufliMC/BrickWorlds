@@ -1,7 +1,10 @@
 package com.gufli.brickworlds.commands.subcommands;
 
+import com.gufli.brickutils.commands.BrickCommand;
+import com.gufli.brickutils.translation.TranslationManager;
 import com.gufli.brickworlds.BrickWorldManager;
 import com.gufli.brickworlds.World;
+import com.gufli.brickworlds.commands.arguments.ArgumentWorld;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.ConsoleSender;
@@ -12,7 +15,7 @@ import net.minestom.server.entity.Player;
 
 import java.util.Optional;
 
-public class LoadCommand extends Command {
+public class LoadCommand extends BrickCommand {
 
     private final BrickWorldManager worldManager;
 
@@ -21,17 +24,12 @@ public class LoadCommand extends Command {
         this.worldManager = worldManager;
 
         // condition
-        setCondition((sender, commandString) -> sender instanceof ConsoleSender ||
-                sender.hasPermission("brickworlds.load") ||
-                (sender instanceof Player p && p.getPermissionLevel() == 4)
-            );
-
-        ArgumentWord world = new ArgumentWord("world");
+        setCondition(b -> b.permission("brickworlds.load"));
 
         // usage
-        setDefaultExecutor((sender, context) -> {
-            sender.sendMessage("Usage: /bw load <world>"); // TODO
-        });
+        setInvalidUsageMessage("cmd.load.usage");
+
+        ArgumentWord world = new ArgumentWord("world");
 
         // syntax
         addSyntax(this::execute, world);
@@ -44,10 +42,10 @@ public class LoadCommand extends Command {
         try {
             world = worldManager.loadWorld(worldName);
         } catch (IllegalArgumentException ex) {
-            sender.sendMessage(Component.text("The world '" + worldName + "' does not exist."));
+            TranslationManager.get().send(sender, "cmd.load.invalid", worldName);
             return;
         }
 
-        sender.sendMessage(Component.text("The world '" + world.worldInfo().name() + "' has been loaded."));
+        TranslationManager.get().send(sender, "cmd.load", world.worldInfo().name());
     }
 }

@@ -1,5 +1,7 @@
 package com.gufli.brickworlds.commands.subcommands;
 
+import com.gufli.brickutils.commands.BrickCommand;
+import com.gufli.brickutils.translation.TranslationManager;
 import com.gufli.brickworlds.BrickWorldManager;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.command.CommandSender;
@@ -8,7 +10,7 @@ import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.CommandContext;
 import net.minestom.server.entity.Player;
 
-public class SaveAllCommand extends Command {
+public class SaveAllCommand extends BrickCommand {
 
     private final BrickWorldManager worldManager;
 
@@ -17,17 +19,14 @@ public class SaveAllCommand extends Command {
         this.worldManager = worldManager;
 
         // condition
-        setCondition((sender, commandString) -> sender instanceof ConsoleSender ||
-                sender.hasPermission("brickworlds.save-all") ||
-                (sender instanceof Player p && p.getPermissionLevel() == 4)
-        );
+        setCondition(b -> b.permission("brickworlds.save-all"));
 
         // usage
         setDefaultExecutor(this::execute);
     }
 
     private void execute(CommandSender sender, CommandContext context) {
-        sender.sendMessage(Component.text("Saving all worlds..."));
+        TranslationManager.get().send(sender, "cmd.save-all");
         worldManager.saveAll();
     }
 }

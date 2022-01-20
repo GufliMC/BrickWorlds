@@ -1,6 +1,7 @@
 package com.gufli.brickworlds;
 
 import com.google.gson.Gson;
+import com.gufli.brickutils.translation.SimpleTranslationManager;
 import com.gufli.brickworlds.commands.BrickWorldsCommand;
 import com.gufli.brickworlds.listeners.PlayerJoinListener;
 import com.gufli.brickworlds.listeners.PlayerSpawnListener;
@@ -20,10 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class BrickWorlds extends Extension {
 
@@ -49,6 +47,10 @@ public class BrickWorlds extends Extension {
             return;
         }
 
+        // TRANSLATIONS
+        SimpleTranslationManager tm = new SimpleTranslationManager(this, Locale.ENGLISH);
+        tm.loadTranslations(this, "languages");
+
         // load worlds directory
         File worldsDirectory = new File("worlds");
         if (!worldsDirectory.exists()) {
@@ -57,6 +59,7 @@ public class BrickWorlds extends Extension {
 
         // create world manager
         worldManager = new BrickWorldManager(worldsDirectory);
+        WorldAPI.setWorldManager(worldManager);
 
         // load worlds
         if ( config.loadOnStartup() != null ) {

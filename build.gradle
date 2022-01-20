@@ -12,6 +12,7 @@ compileJava {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'maven-publish'
 
     sourceCompatibility = 1.17
     targetCompatibility = 1.17
@@ -28,5 +29,6 @@ subprojects {
 
         maven { url 'https://jitpack.io' }
         maven { url 'https://repo.spongepowered.org/maven' }
+        maven { url "https://repo.jorisg.com/snapshots" }
     }
 }

@@ -1,0 +1,27 @@
+{
+  "cmd.error.permission": "You don't have permission for this command.",
+  "cmd.error.player-only": "This command can only be executed by a player.",
+  "cmd.error.console-only": "This command can only be executed by the console.",
+
+  "cmd.error.args": "{1} is not a valid {0}.",
+  "cmd.error.args.player": "The player {0} is not online.",
+  "cmd.error.args.world": "{0} is not a valid world.",
+
+  "cmd.list": "List of worlds: {0}",
+
+  "cmd.load.usage": "Invalid usage, try this: /bw load <world>",
+  "cmd.load.invalid": "The world {0} does not exist.",
+  "cmd.load": "Loaded {0}.",
+
+  "cmd.save-all": "Saving all worlds.",
+
+  "cmd.save.usage": "Invalid usage, try this: /bw save <world>",
+  "cmd.save": "Saving {0}.",
+
+  "cmd.setspawn.usage": "Invalid usage, try this: /bw setspawn",
+  "cmd.setspawn.invalid": "Your instance is not being tracked.",
+  "cmd.setspawn": "Changed the spawn of {0} to your current position.",
+
+  "cmd.teleport.usage": "Invalid usage, try this: /bw teleport <world>",
+  "cmd.teleport": "You've been teleported to {0}."
+}

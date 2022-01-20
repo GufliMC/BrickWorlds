@@ -1,17 +1,15 @@
 package com.gufli.brickworlds.commands.subcommands;
 
+import com.gufli.brickutils.commands.BrickCommand;
+import com.gufli.brickutils.translation.TranslationManager;
 import com.gufli.brickworlds.BrickWorldManager;
 import com.gufli.brickworlds.World;
-import net.kyori.adventure.text.Component;
+import com.gufli.brickworlds.commands.arguments.ArgumentWorld;
 import net.minestom.server.command.CommandSender;
-import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.CommandContext;
-import net.minestom.server.command.builder.arguments.ArgumentWord;
 import net.minestom.server.entity.Player;
 
-import java.util.Optional;
-
-public class TeleportCommand extends Command {
+public class TeleportCommand extends BrickCommand {
 
     private final BrickWorldManager worldManager;
 
@@ -20,35 +18,21 @@ public class TeleportCommand extends Command {
         this.worldManager = worldManager;
 
         // condition
-        setCondition((sender, commandString) -> sender instanceof Player p && (
-                p.hasPermission("brickworlds.teleport") ||
-                p.getPermissionLevel() == 4
-        ));
-
-        ArgumentWord world = new ArgumentWord("world")
-                .from(worldManager.worlds().stream().map(w -> w.worldInfo().name()).toArray(String[]::new));
-
-        setArgumentCallback((sender, exception) -> {
-            sender.sendMessage("The world '" + exception.getInput() + "' does not exist.");
-        }, world);
+        setCondition(b -> b.permission("brickworlds.teleport"));
 
         // usage
-        setDefaultExecutor((sender, context) -> {
-            sender.sendMessage("Usage: /bw teleport <world>"); // TODO
-        });
+        setInvalidUsageMessage("cmd.teleport.usage");
+
+        ArgumentWorld world = new ArgumentWorld("world");
+        setInvalidArgumentMessage(world, "cmd.error.args.world");
 
         // syntax
         addSyntax(this::execute, world);
     }
 
     private void execute(CommandSender sender, CommandContext context) {
-        String worldName = context.get("world");
-        Optional<World> world = worldManager.worldByName(worldName);
-        if (world.isEmpty()) {
-            return;
-        }
-
-        world.get().teleport((Player) sender);
-        sender.sendMessage(Component.text("You have been teleported to world '" + world.get().worldInfo().name() + "'."));
+        World world = context.get("world");
+        world.teleport((Player) sender);
+        TranslationManager.get().send(sender, "cmd.teleport", world.worldInfo().name());
     }
 }

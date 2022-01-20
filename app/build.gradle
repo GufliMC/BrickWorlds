@@ -12,9 +12,12 @@ jar {
 dependencies {
     implementation project(':api')
 
-    compileOnly 'com.github.Minestom:Minestom:1.18-SNAPSHOT'
+    compileOnly 'com.github.Minestom:Minestom:-SNAPSHOT'
 
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'com.gufli.brickutils:translation:1.0-SNAPSHOT'
+    implementation 'com.gufli.brickutils:commands:1.0-SNAPSHOT'
+
+//    implementation 'org.apache.commons:commons-lang3:3.12.0'
 }
 
 test {
