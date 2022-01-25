@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 public interface WorldManager {
 
@@ -12,7 +13,7 @@ public interface WorldManager {
 
     Optional<World> worldByName(String name);
 
-    void saveAll();
+    CompletableFuture<Void> saveAll();
 
     void deleteWorld(@NotNull World world);
 
@@ -21,5 +22,7 @@ public interface WorldManager {
     World createWorld(@NotNull String name, @NotNull WorldGenerator generator);
 
     World loadWorld(@NotNull File directory);
+
+    World loadWorld(@NotNull String name);
 
 }

@@ -11,11 +11,8 @@ import net.minestom.server.entity.Player;
 
 public class TeleportCommand extends BrickCommand {
 
-    private final BrickWorldManager worldManager;
-
-    public TeleportCommand(BrickWorldManager worldManager) {
+    public TeleportCommand() {
         super("teleport", "tp");
-        this.worldManager = worldManager;
 
         // condition
         setCondition(b -> b.permission("brickworlds.teleport"));

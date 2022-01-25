@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class BrickWorldManager implements WorldManager {
@@ -26,7 +28,11 @@ public class BrickWorldManager implements WorldManager {
     }
 
     void shutdown() {
-        saveAll();
+        try {
+            saveAll().get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -46,11 +52,13 @@ public class BrickWorldManager implements WorldManager {
                 .findFirst();
     }
 
-    public void saveAll() {
-        instanceManager.getInstances().stream()
-                .filter(inst -> inst instanceof WorldInstanceContainer)
-                .map(inst -> (WorldInstanceContainer) inst)
-                .forEach(WorldInstanceContainer::save);
+    @Override
+    public CompletableFuture<Void> saveAll() {
+        return CompletableFuture.allOf(
+                instanceManager.getInstances().stream()
+                        .filter(inst -> inst instanceof WorldInstanceContainer)
+                        .map(inst -> (WorldInstanceContainer) inst)
+                        .map(WorldInstanceContainer::save).toArray(CompletableFuture[]::new));
     }
 
     @Override
@@ -106,6 +114,7 @@ public class BrickWorldManager implements WorldManager {
         return instance;
     }
 
+    @Override
     public World loadWorld(@NotNull String name) {
         File[] files = worldsDirectory.listFiles();
         if (files == null) {

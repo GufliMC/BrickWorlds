@@ -10,11 +10,8 @@ import net.minestom.server.entity.Player;
 
 public class SetSpawnCommand extends BrickCommand {
 
-    private final BrickWorldManager worldManager;
-
-    public SetSpawnCommand(BrickWorldManager worldManager) {
+    public SetSpawnCommand() {
         super("setspawn");
-        this.worldManager = worldManager;
 
         // condition
         setCondition(b -> b.permission("brickworlds.setspawn"));

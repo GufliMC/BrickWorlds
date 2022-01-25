@@ -79,7 +79,7 @@ public class BrickWorlds extends Extension {
             eventListeners.add(new PlayerSpawnListener(defaultWorld.get()));
         }
 
-        commands.add(new BrickWorldsCommand(worldManager));
+        commands.add(new BrickWorldsCommand());
 
         // register listeners
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
@@ -103,14 +103,6 @@ public class BrickWorlds extends Extension {
 
     @Override
     public void terminate() {
-        if (worldManager != null) {
-            worldManager.shutdown();
-        }
-
-        if ( autoSaveTask != null ) {
-            autoSaveTask.cancel();
-        }
-
         // unregister listeners
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
         eventListeners.forEach(eventHandler::removeListener);
@@ -118,6 +110,14 @@ public class BrickWorlds extends Extension {
         // unregister commands
         CommandManager commandManager = MinecraftServer.getCommandManager();
         commands.forEach(commandManager::unregister);
+
+        if (worldManager != null) {
+            worldManager.shutdown();
+        }
+
+        if ( autoSaveTask != null ) {
+            autoSaveTask.cancel();
+        }
 
         getLogger().info("Disabled " + nameAndVersion() + ".");
     }

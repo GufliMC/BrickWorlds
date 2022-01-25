@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 public class WorldAPI {
 
@@ -24,8 +25,8 @@ public class WorldAPI {
         return worldManager.worldByName(name);
     }
 
-    public static void saveAll() {
-        worldManager.saveAll();
+    public static CompletableFuture<Void> saveAll() {
+        return worldManager.saveAll();
     }
 
     public static void deleteWorld(@NotNull World world) {
@@ -42,6 +43,10 @@ public class WorldAPI {
 
     public static World loadWorld(@NotNull File directory) {
         return worldManager.loadWorld(directory);
+    }
+
+    public static World loadWorld(@NotNull String name) {
+        return worldManager.loadWorld(name);
     }
 
 }

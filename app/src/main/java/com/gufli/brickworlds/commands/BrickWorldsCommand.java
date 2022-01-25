@@ -6,17 +6,17 @@ import com.gufli.brickworlds.commands.subcommands.*;
 
 public class BrickWorldsCommand extends BrickCommand {
 
-    public BrickWorldsCommand(BrickWorldManager worldManager) {
+    public BrickWorldsCommand() {
         super("brickworlds", "bw");
 
         setupCommandGroupDefaults();
 
-        addSubcommand(new ListCommand(worldManager));
-        addSubcommand(new SaveAllCommand(worldManager));
-        addSubcommand(new SaveCommand(worldManager));
-        addSubcommand(new TeleportCommand(worldManager));
-        addSubcommand(new SetSpawnCommand(worldManager));
-        addSubcommand(new LoadCommand(worldManager));
+        addSubcommand(new ListCommand());
+        addSubcommand(new SaveAllCommand());
+        addSubcommand(new SaveCommand());
+        addSubcommand(new TeleportCommand());
+        addSubcommand(new SetSpawnCommand());
+        addSubcommand(new LoadCommand());
     }
 
 }

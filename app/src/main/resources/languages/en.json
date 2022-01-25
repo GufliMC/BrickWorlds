@@ -13,10 +13,10 @@
   "cmd.load.invalid": "The world {0} does not exist.",
   "cmd.load": "Loaded {0}.",
 
-  "cmd.save-all": "Saving all worlds.",
+  "cmd.save-all": "Saving all worlds...",
 
   "cmd.save.usage": "Invalid usage, try this: /bw save <world>",
-  "cmd.save": "Saving {0}.",
+  "cmd.save": "Saving {0}...",
 
   "cmd.setspawn.usage": "Invalid usage, try this: /bw setspawn",
   "cmd.setspawn.invalid": "Your instance is not being tracked.",

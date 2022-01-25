@@ -4,6 +4,7 @@ import com.gufli.brickutils.commands.BrickCommand;
 import com.gufli.brickutils.translation.TranslationManager;
 import com.gufli.brickworlds.BrickWorldManager;
 import com.gufli.brickworlds.World;
+import com.gufli.brickworlds.WorldAPI;
 import com.gufli.brickworlds.commands.arguments.ArgumentWorld;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.command.CommandSender;
@@ -17,11 +18,9 @@ import java.util.Optional;
 
 public class LoadCommand extends BrickCommand {
 
-    private final BrickWorldManager worldManager;
 
-    public LoadCommand(BrickWorldManager worldManager) {
+    public LoadCommand() {
         super("load");
-        this.worldManager = worldManager;
 
         // condition
         setCondition(b -> b.permission("brickworlds.load"));
@@ -40,7 +39,7 @@ public class LoadCommand extends BrickCommand {
 
         World world;
         try {
-            world = worldManager.loadWorld(worldName);
+            world = WorldAPI.loadWorld(worldName);
         } catch (IllegalArgumentException ex) {
             TranslationManager.get().send(sender, "cmd.load.invalid", worldName);
             return;

@@ -1,6 +1,5 @@
 package com.gufli.brickworlds.world;
 
-import com.google.gson.Gson;
 import com.gufli.brickworlds.World;
 import com.gufli.brickworlds.WorldInfo;
 import net.minestom.server.coordinate.Pos;
@@ -45,20 +44,20 @@ public class WorldInstanceContainer extends InstanceContainer implements World {
     }
 
     @Override
-    public void save() {
-        CompletableFuture.allOf(
+    public CompletableFuture<Void> save() {
+        return CompletableFuture.allOf(
                 saveInstance(),
                 saveChunksToStorage(),
                 CompletableFuture.runAsync(worldInfo::save)
         ).thenRun(() -> {
-            LOGGER.info("Saved world '" + worldInfo.name() + "' to storage.");
+            LOGGER.info("Saved " + worldInfo.name() + ".");
         });
     }
 
     @Override
     public void teleport(Player player) {
         Pos spawn = worldInfo().spawn();
-        if ( spawn == null ) {
+        if (spawn == null) {
             spawn = new Pos(0, 1, 0);
         }
 
@@ -69,7 +68,7 @@ public class WorldInstanceContainer extends InstanceContainer implements World {
             spawn = spawn.add(0, 2, 0);
         }
 
-        if ( player.getInstance() != this ) {
+        if (player.getInstance() != this) {
             player.setInstance(this);
         }
         player.teleport(spawn);
