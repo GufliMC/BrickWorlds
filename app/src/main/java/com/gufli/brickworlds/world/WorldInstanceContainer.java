@@ -45,12 +45,15 @@ public class WorldInstanceContainer extends InstanceContainer implements World {
 
     @Override
     public CompletableFuture<Void> save() {
+        LOGGER.info(String.format("Saving %s...", worldInfo.name()));
+        long millis = System.currentTimeMillis();
         return CompletableFuture.allOf(
                 saveInstance(),
                 saveChunksToStorage(),
                 CompletableFuture.runAsync(worldInfo::save)
         ).thenRun(() -> {
-            LOGGER.info("Saved " + worldInfo.name() + ".");
+            float time = (System.currentTimeMillis() - millis) / 1000f;
+            LOGGER.info(String.format("Saved %s in %.2fs.", worldInfo.name(), time));
         });
     }
 
