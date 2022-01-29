@@ -8,6 +8,7 @@ import com.gufli.brickworlds.commands.arguments.ArgumentWorld;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.CommandContext;
+import net.minestom.server.entity.Player;
 import net.minestom.server.timer.ExecutionType;
 
 import java.util.concurrent.CompletableFuture;
@@ -23,11 +24,19 @@ public class SaveCommand extends BrickCommand {
         // usage
         setInvalidUsageMessage("cmd.save.usage");
 
-        ArgumentWorld world = new ArgumentWorld("world");
-        setInvalidArgumentMessage(world, "cmd.error.args.world");
+        ArgumentWorld worldArg = new ArgumentWorld("world");
+        setInvalidArgumentMessage(worldArg, "cmd.error.args.world");
 
         // syntax
-        addSyntax(this::execute, world);
+        addSyntax(this::execute, worldArg);
+
+        addConditionalSyntax(b -> b.playerOnly(), (sender, context) -> {
+            Player player = (Player) sender;
+            if ( player.getInstance() instanceof World world ) {
+                TranslationManager.get().send(sender, "cmd.save", world.worldInfo().name());
+                world.save();
+            }
+        });
     }
 
     private void execute(CommandSender sender, CommandContext context) {
