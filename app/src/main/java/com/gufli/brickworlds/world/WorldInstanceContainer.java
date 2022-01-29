@@ -32,6 +32,11 @@ public class WorldInstanceContainer extends InstanceContainer implements World {
         this.worldInfo = worldInfo;
 
         // TODO apply generator from worldinfo file
+
+        if ( !directory.exists() ) {
+            directory.mkdirs();
+            save();
+        }
     }
 
     @Override
