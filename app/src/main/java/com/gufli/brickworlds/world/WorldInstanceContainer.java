@@ -69,7 +69,7 @@ public class WorldInstanceContainer extends InstanceContainer implements World {
             spawn = new Pos(0, 1, 0);
         }
 
-        loadChunk(spawn);
+        loadChunk(spawn).join();
 
         while (!getBlock(spawn).isAir()
                 || !getBlock(spawn.add(0, 1, 0)).isAir()) {
