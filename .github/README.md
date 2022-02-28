@@ -4,7 +4,7 @@ An extension for [Minestom](https://github.com/Minestom/Minestom) to manage worl
 
 ## Install
 
-Get the [release](./releases)
+Get the [release](https://github.com/MinestomBrick/BrickWorlds/releases)
 and place it in the extension folder of your minestom server.
 
 ### Dependencies
