@@ -5,7 +5,7 @@ plugins {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'com.gufli.brickworlds.BrickWorlds'
+        attributes 'Main-Class': 'org.minestombrick.worlds.app.BrickWorlds'
     }
 }
 
@@ -13,11 +13,8 @@ dependencies {
     implementation project(':api')
 
     compileOnly 'com.github.Minestom:Minestom:-SNAPSHOT'
-
-    implementation 'com.gufli.brickutils:translation:1.0-SNAPSHOT'
-    implementation 'com.gufli.brickutils:commands:1.0-SNAPSHOT'
-
-//    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    compileOnly 'org.minestombrick.i18n:api:1.0-SNAPSHOT'
+    compileOnly 'org.minestombrick.commandtools:api:1.0-SNAPSHOT'
 }
 
 test {

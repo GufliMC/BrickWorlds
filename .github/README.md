@@ -4,14 +4,15 @@ An extension for [Minestom](https://github.com/Minestom/Minestom) to manage worl
 
 ## Install
 
-Get the latest jar file from [Github actions](https://github.com/MinestomBrick/BrickWorlds/actions) 
+Get the [release](./releases)
 and place it in the extension folder of your minestom server.
+
+### Dependencies
+* [BrickI18n](https://github.com/MinestomBrick/BrickI18n)
 
 Worlds are stored in the `worlds` directory at the root of your server.
 
 ## Commands
-
-Don't worry, console can execute all commands ;)
 
 | Command              | Permission           |
 |----------------------|----------------------|
@@ -48,11 +49,21 @@ Change autosave interval in minutes. Use 0 to disable autosaving.
 }
 ```
 
-## Credits
 
-* The [Minestom](https://github.com/Minestom/Minestom) project
+## API
 
-## Contributing
+### Maven
+```
+repositories {
+    maven { url "https://repo.jorisg.com/snapshots" }
+}
 
-Check our [contributing info](CONTRIBUTING.md)
+dependencies {
+    implementation 'org.minestombrick.worlds:api:1.0-SNAPSHOT'
+}
+```
+
+### Usage
+
+Check the [javadocs](https://minestombrick.github.io/BrickWorlds/)
 
