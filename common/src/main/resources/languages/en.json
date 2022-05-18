@@ -1,0 +1,26 @@
+{
+  "cmd.error.args.world":  "<red>The world {0} does not exist.",
+
+  "cmd.list": "<green>List of worlds: {0}",
+
+  "cmd.load.usage": "<green>Invalid usage, try this: /bw load <world>",
+  "cmd.load": "<green>Loading {0}...",
+
+  "cmd.unload": "<green>Unloading {0}...",
+  "cmd.unload.invalid": "<red>The world {0} is not loaded.",
+
+  "cmd.save-all": "<green>Saving all worlds...",
+
+  "cmd.save": "<green>Saving {0}...",
+
+  "cmd.info.result.name": "<green>Name: {0}",
+  "cmd.info.result.authors": "<green>Authors: {0}",
+  "cmd.info.result.generator": "<green>Generator: {0}",
+
+  "cmd.setspawn": "<green>Changed the spawn of {0} to your current position.",
+
+  "cmd.teleport": "<green>You've been teleported to {0}.",
+
+  "cmd.create.exists": "<red>The world {0} already exists.",
+  "cmd.create": "<green>You created the world {0}."
+}

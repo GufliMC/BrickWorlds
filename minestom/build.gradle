@@ -1,0 +1,50 @@
+plugins {
+    id 'com.guflimc.minestom.extensionsetup' version '+'
+}
+
+repositories {
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://repo.aikar.co/content/groups/aikar/' }
+}
+
+dependencies {
+    // provided by platform
+    compileOnly 'com.github.Minestom:Minestom:-SNAPSHOT'
+    compileOnly 'org.slf4j:slf4j-api:1.+'
+
+    // provided by extensions
+    compileOnly 'com.guflimc.brick.i18n:minestom-api:+'
+
+    // shadow
+    implementation (project(':common')) {
+        exclude group: 'com.guflimc.brick.i18n'
+        exclude group: 'net.kyori'
+        exclude group: 'com.google.code.gson'
+    }
+    implementation (project(':minestom-api')) {
+        exclude group: 'com.google.code.gson'
+    }
+
+    implementation 'cloud.commandframework:cloud-core:+'
+    implementation 'cloud.commandframework:cloud-annotations:+'
+    implementation 'com.guflimc.cloud:cloud-minestom:+'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+minestomExtension {
+    entrypoint = "com.guflimc.brick.worlds.minestom.MinestomBrickWorlds"
+    dependencies = ["BrickI18n"]
+}
+
+println project.configurations.runtimeClasspath.getResolvedConfiguration().getLenientConfiguration()
+        .getArtifacts().stream().map(art -> art.moduleVersion.id).toList()
+
+shadowJar.doLast {
+    copy {
+        from "build/libs/" + archiveFileName.get()
+        into 'D:\\Documents\\testservers\\WollyMC\\lobby2\\extensions'
+    }
+}

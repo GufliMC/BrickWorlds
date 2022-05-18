@@ -1,0 +1,18 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://repo.aikar.co/content/groups/aikar/' }
+}
+
+dependencies {
+    api project(':api')
+
+    implementation 'cloud.commandframework:cloud-core:+'
+    implementation 'cloud.commandframework:cloud-annotations:+'
+
+    implementation 'net.kyori:adventure-api:4.+'
+    implementation 'com.guflimc.brick.i18n:api:+'
+}

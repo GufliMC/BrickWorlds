@@ -1,27 +1,7 @@
 plugins {
-    id 'java'
-    id 'maven-publish'
+    id 'java-library'
 }
 
 dependencies {
-    compileOnly 'com.github.Minestom:Minestom:-SNAPSHOT'
-}
-
-publishing {
-    repositories {
-        maven {
-            name = "Jorisg"
-            url = uri("https://repo.jorisg.com/snapshots")
-            credentials(org.gradle.api.credentials.PasswordCredentials)
-        }
-    }
-
-    publications {
-        release(MavenPublication) {
-            from components.java
-            groupId = rootProject.group
-            artifactId = project.name
-            version = rootProject.version
-        }
-    }
+    implementation 'com.google.code.gson:gson:2.9.0'
 }

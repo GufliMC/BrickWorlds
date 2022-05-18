@@ -1,33 +1,26 @@
 plugins {
-    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2' apply false
+    id 'pl.allegro.tech.build.axion-release' version '1.13.6'
 }
 
-group 'org.minestombrick.worlds'
-version '1.0-SNAPSHOT'
+group 'com.guflimc.brick.worlds'
+version = scmVersion.version
 
-compileJava {
-    sourceCompatibility = 1.17
-    targetCompatibility = 1.17
-}
+def javadocProjects = [project(':api'), project(':minestom-api')]
+ext.set("javadocProjects", javadocProjects)
+
+def publishProjects = [project(':api'), project(':minestom-api')]
+ext.set("publishProjects", publishProjects)
 
 subprojects {
     apply plugin: 'java'
 
-    sourceCompatibility = 1.17
-    targetCompatibility = 1.17
-
-    group = parent.group;
-    version = parent.version;
-
-    tasks.withType(JavaCompile) {
-        options.encoding = 'UTF-8'
-    }
-
     repositories {
-        mavenCentral()
-
-        maven { url 'https://jitpack.io' }
-        maven { url 'https://repo.spongepowered.org/maven' }
         maven { url "https://repo.jorisg.com/snapshots" }
     }
 }
+
+apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-default.gradle'
+apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-javadoc.gradle'
+apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-shadow.gradle'
+apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-publish.gradle'

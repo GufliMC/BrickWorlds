@@ -1,6 +1,14 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven { url "https://repo.jorisg.com/snapshots" }
+    }
+}
+
 rootProject.name = 'BrickWorlds'
 
-include (
-        'api',
-        'app'
-)
+include 'api'
+include 'minestom'
+include 'minestom-api'
+include 'common'
+
