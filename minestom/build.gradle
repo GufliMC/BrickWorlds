@@ -38,13 +38,3 @@ minestomExtension {
     entrypoint = "com.guflimc.brick.worlds.minestom.MinestomBrickWorlds"
     dependencies = ["BrickI18n"]
 }
-
-println project.configurations.runtimeClasspath.getResolvedConfiguration().getLenientConfiguration()
-        .getArtifacts().stream().map(art -> art.moduleVersion.id).toList()
-
-shadowJar.doLast {
-    copy {
-        from "build/libs/" + archiveFileName.get()
-        into 'D:\\Documents\\testservers\\WollyMC\\lobby2\\extensions'
-    }
-}
