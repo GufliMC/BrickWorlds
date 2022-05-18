@@ -22,5 +22,6 @@ jobs:
   pre-release:
     needs: test
     uses: GufliOfficial/.github/.github/workflows/java-gradle-github-release.yml@main
-    files: |
-      minestom/build/libs/*.jar
+    with:
+      files: |
+        minestom/build/libs/*.jar
