@@ -4,23 +4,26 @@ An extension for [Minestom](https://github.com/Minestom/Minestom) to manage worl
 
 ## Install
 
-Get the [release](https://github.com/MinestomBrick/BrickWorlds/releases)
+Get the [release](https://github.com/GufliMC/BrickWorlds/releases)
 and place it in the extension folder of your minestom server.
 
 ### Dependencies
-* [BrickI18n](https://github.com/MinestomBrick/BrickI18n)
+* [BrickI18n](https://github.com/GufliMC/BrickI18n)
 
 Worlds are stored in the `worlds` directory at the root of your server.
 
 ## Commands
 
-| Command              | Permission           |
-|----------------------|----------------------|
-| /bw save-all         | brickworlds.save-all |
-| /bw save (world)     | brickworlds.save     |
-| /bw load (world)     | brickworlds.load     |
-| /bw setspawn         | brickworlds.setspawn |
-| /bw teleport (world) | brickworlds.teleport |
+| Command                        | Permission           |
+|--------------------------------|----------------------|
+| /bw save-all                   | brickworlds.save-all |
+| /bw save (world)               | brickworlds.save     |
+| /bw load (world)               | brickworlds.load     |
+| /bw unload (world)             | brickworlds.unload   |
+| /bw setspawn                   | brickworlds.setspawn |
+| /bw teleport (world)           | brickworlds.teleport |
+| /bw create (world)             | brickworlds.create   |
+| /bw create (world) (generator) | brickworlds.create   |
 
 ## Config
 
@@ -49,21 +52,31 @@ Change autosave interval in minutes. Use 0 to disable autosaving.
 }
 ```
 
-
 ## API
 
-### Maven
+### Gradle
 ```
 repositories {
     maven { url "https://repo.jorisg.com/snapshots" }
 }
 
 dependencies {
-    implementation 'org.minestombrick.worlds:api:1.0-SNAPSHOT'
+    implementation 'com.guflimc.brick.worlds:minestom-api:+'
 }
 ```
 
-### Usage
+### Javadocs
 
-Check the [javadocs](https://minestombrick.github.io/BrickWorlds/)
+Check javadocs [here](https://guflimc.github.io/BrickWorlds/).
 
+### Examples
+
+```java
+MinestomWorldAPI.get().create("universe");
+
+MinestomWorldAPI.get().availableWorlds().forEach(info -> System.out.println(info.name()));
+
+MinestomWroldAPI.get().worldInfoByName("universe").get();
+
+MinestomWroldAPI.get().worldByName("universe").get().asInstance();
+```

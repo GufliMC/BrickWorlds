@@ -12,6 +12,9 @@ ext.set("javadocProjects", javadocProjects)
 def publishProjects = [project(':api'), project(':minestom-api')]
 ext.set("publishProjects", publishProjects)
 
+def shadowProjects = [project(':minestom')]
+ext.set("shadowProjects", shadowProjects)
+
 subprojects {
     apply plugin: 'java'
 
