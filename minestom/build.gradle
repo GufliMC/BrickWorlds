@@ -15,6 +15,9 @@ dependencies {
     // provided by extensions
     compileOnly 'com.guflimc.brick.i18n:minestom-api:+'
 
+    // external dependency
+    library 'com.google.code.gson:gson:2.9.0'
+
     // shadow
     implementation (project(':common')) {
         exclude group: 'com.guflimc.brick.i18n'
@@ -35,6 +38,7 @@ test {
 }
 
 minestomExtension {
+    name = rootProject.name
     entrypoint = "com.guflimc.brick.worlds.minestom.MinestomBrickWorlds"
     dependencies = ["BrickI18n"]
 }
