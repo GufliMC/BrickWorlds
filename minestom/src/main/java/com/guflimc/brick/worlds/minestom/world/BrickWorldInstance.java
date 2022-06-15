@@ -2,7 +2,7 @@ package com.guflimc.brick.worlds.minestom.world;
 
 import com.guflimc.brick.worlds.api.math.Position;
 import com.guflimc.brick.worlds.api.world.WorldInfo;
-import com.guflimc.brick.worlds.minestom.api.world.World;
+import com.guflimc.brick.worlds.minestom.api.world.MinestomWorld;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.AnvilLoader;
@@ -16,7 +16,7 @@ import java.io.File;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-public class BrickWorldInstance extends InstanceContainer implements World {
+public class BrickWorldInstance extends InstanceContainer implements MinestomWorld {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(BrickWorldInstance.class);
 

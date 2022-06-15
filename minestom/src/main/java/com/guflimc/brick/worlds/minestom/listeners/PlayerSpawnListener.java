@@ -1,16 +1,16 @@
 package com.guflimc.brick.worlds.minestom.listeners;
 
 
-import com.guflimc.brick.worlds.minestom.api.world.World;
+import com.guflimc.brick.worlds.minestom.api.world.MinestomWorld;
 import net.minestom.server.event.EventListener;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerSpawnListener implements EventListener<PlayerSpawnEvent> {
 
-    private final World instance;
+    private final MinestomWorld instance;
 
-    public PlayerSpawnListener(World defaultInstance) {
+    public PlayerSpawnListener(MinestomWorld defaultInstance) {
         this.instance = defaultInstance;
     }
 

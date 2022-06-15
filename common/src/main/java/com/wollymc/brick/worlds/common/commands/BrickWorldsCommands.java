@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 
 public class BrickWorldsCommands {
 
-    protected final WorldManager manager;
+    protected final WorldManager<?> manager;
 
-    public BrickWorldsCommands(WorldManager manager) {
+    public BrickWorldsCommands(WorldManager<?> manager) {
         this.manager = manager;
     }
 
@@ -33,7 +33,7 @@ public class BrickWorldsCommands {
     @Suggestions("loadedWorld")
     public List<String> loadedWorldSuggestion(CommandContext<Audience> sender, String input) {
         return manager.loadedWorlds().stream()
-                .map(WorldInfo::name)
+                .map(w -> w.info().name())
                 .filter(name -> name.startsWith(input))
                 .collect(Collectors.toList());
     }
@@ -42,7 +42,7 @@ public class BrickWorldsCommands {
     public void list(Audience sender) {
         List<Component> result = new ArrayList<>();
         Collection<String> loadedWorlds = manager.loadedWorlds().stream()
-                .map(WorldInfo::name).toList();
+                .map(w -> w.info().name()).toList();
 
         manager.availableWorlds().stream().sorted(Comparator.comparing(WorldInfo::name))
                 .filter(info -> loadedWorlds.contains(info.name()))

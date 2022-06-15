@@ -8,7 +8,7 @@ import com.guflimc.brick.i18n.api.I18nAPI;
 import com.guflimc.brick.worlds.api.math.Position;
 import com.guflimc.brick.worlds.minestom.MinestomBrickWorldManager;
 import com.guflimc.brick.worlds.minestom.api.world.MinestomGeneratorRegsitry;
-import com.guflimc.brick.worlds.minestom.api.world.World;
+import com.guflimc.brick.worlds.minestom.api.world.MinestomWorld;
 import net.kyori.adventure.audience.Audience;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
@@ -34,7 +34,7 @@ public class MinestomBrickWorldsCommands {
 
     @CommandMethod("bw save")
     public void save(Player sender) {
-        if ( sender.getInstance() instanceof World world ) {
+        if ( sender.getInstance() instanceof MinestomWorld world ) {
             I18nAPI.get(this).send(sender, "cmd.save", world.info().name());
             world.save();
         }
@@ -42,7 +42,7 @@ public class MinestomBrickWorldsCommands {
 
     @CommandMethod("bw setspawn")
     public void setspawn(Player sender) {
-        if ( sender.getInstance() instanceof World world ) {
+        if ( sender.getInstance() instanceof MinestomWorld world ) {
             Pos pos = sender.getPosition();
             world.info().setSpawn(new Position(pos.x(), pos.y(), pos.z(), pos.yaw(), pos.pitch()));
             I18nAPI.get(this).send(sender, "cmd.setspawn", world.info().name());
@@ -51,7 +51,7 @@ public class MinestomBrickWorldsCommands {
 
     @CommandMethod("bw teleport|tp <world>")
     public void teleport(Player sender, @Argument(value = "world", suggestions = "loadedWorld") String world) {
-        Optional<World> worldOptional = manager.worldByName(world);
+        Optional<MinestomWorld> worldOptional = manager.worldByName(world);
         if ( worldOptional.isEmpty() ) {
             I18nAPI.get(this).send(sender, "cmd.error.args.world", world);
             return;

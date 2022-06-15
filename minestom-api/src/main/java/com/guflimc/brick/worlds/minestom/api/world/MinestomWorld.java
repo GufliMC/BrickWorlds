@@ -1,19 +1,10 @@
 package com.guflimc.brick.worlds.minestom.api.world;
 
-import com.guflimc.brick.worlds.api.world.WorldInfo;
+import com.guflimc.brick.worlds.api.world.World;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
 
-import java.io.File;
-import java.util.concurrent.CompletableFuture;
-
-public interface World {
-
-    WorldInfo info();
-
-    File directory();
-
-    CompletableFuture<Void> save();
+public interface MinestomWorld extends World {
 
     void teleport(Player player);
 

@@ -1,6 +1,7 @@
 package com.wollymc.brick.worlds.common;
 
 import com.guflimc.brick.worlds.api.WorldManager;
+import com.guflimc.brick.worlds.api.world.World;
 import com.guflimc.brick.worlds.api.world.WorldInfo;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +12,7 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class AbstractWorldManager implements WorldManager {
+public abstract class AbstractWorldManager<T extends World> implements WorldManager<T> {
 
     protected final File worldsDirectory;
 
@@ -61,7 +62,10 @@ public abstract class AbstractWorldManager implements WorldManager {
     }
 
     protected final WorldInfo worldInfo(File directory) {
-        return WorldInfo.of(new File(directory, "worldinfo.json"));
+        return WorldInfo.of(infoFile(directory));
     }
 
+    protected final File infoFile(File directory) {
+        return new File(directory, "worldinfo.json");
+    }
 }

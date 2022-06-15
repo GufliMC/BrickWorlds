@@ -8,7 +8,7 @@ import com.guflimc.brick.i18n.minestom.api.MinestomI18nAPI;
 import com.guflimc.brick.i18n.minestom.api.namespace.MinestomNamespace;
 import com.guflimc.brick.worlds.minestom.api.MinestomWorldAPI;
 import com.guflimc.brick.worlds.minestom.api.world.MinestomGeneratorRegsitry;
-import com.guflimc.brick.worlds.minestom.api.world.World;
+import com.guflimc.brick.worlds.minestom.api.world.MinestomWorld;
 import com.guflimc.brick.worlds.minestom.commands.MinestomBrickWorldsCommands;
 import com.guflimc.brick.worlds.minestom.generators.FlatGenerator;
 import com.guflimc.brick.worlds.minestom.generators.VoidGenerator;
@@ -82,7 +82,7 @@ public class MinestomBrickWorlds extends Extension {
         }
 
         // default world
-        Optional<World> defaultWorld = Optional.empty();
+        Optional<MinestomWorld> defaultWorld = Optional.empty();
         if (config.defaultWorld() != null) {
             defaultWorld = worldManager.worldByName(config.defaultWorld());
         }
