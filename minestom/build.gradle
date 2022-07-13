@@ -17,6 +17,7 @@ dependencies {
 
     // external dependency
     library 'com.google.code.gson:gson:2.9.0'
+    library 'com.guflimc.brick.maths:minestom-api:+'
 
     // shadow
     implementation (project(':common')) {
@@ -41,4 +42,11 @@ minestomExtension {
     name = rootProject.name
     entrypoint = "com.guflimc.brick.worlds.minestom.MinestomBrickWorlds"
     dependencies = ["BrickI18n"]
+}
+
+shadowJar.doLast {
+    copy {
+        from "build/libs/" + archiveFileName.get()
+        into 'C:\\Users\\joris\\Nextcloud\\WollyMC\\testservers\\lobby\\extensions'
+    }
 }

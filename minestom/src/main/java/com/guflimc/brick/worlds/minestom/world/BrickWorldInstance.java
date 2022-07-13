@@ -1,6 +1,6 @@
 package com.guflimc.brick.worlds.minestom.world;
 
-import com.guflimc.brick.worlds.api.math.Position;
+import com.guflimc.brick.maths.minestom.api.MinestomMaths;
 import com.guflimc.brick.worlds.api.world.WorldInfo;
 import com.guflimc.brick.worlds.minestom.api.world.MinestomWorld;
 import net.minestom.server.coordinate.Pos;
@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class BrickWorldInstance extends InstanceContainer implements MinestomWorld {
@@ -25,7 +24,7 @@ public class BrickWorldInstance extends InstanceContainer implements MinestomWor
     private final WorldInfo worldInfo;
 
     public BrickWorldInstance(@NotNull File directory, WorldInfo worldInfo) {
-        super(UUID.randomUUID(), DimensionType.OVERWORLD);
+        super(worldInfo.id(), DimensionType.OVERWORLD);
         setChunkLoader(new AnvilLoader(directory.toPath()));
         enableAutoChunkLoad(true);
 
@@ -62,14 +61,7 @@ public class BrickWorldInstance extends InstanceContainer implements MinestomWor
     }
 
     public void teleport(Player player) {
-        Pos spawn;
-
-        Position spawnPosition = info().spawn();
-        if ( spawnPosition != null ) {
-            spawn = new Pos(spawnPosition.x(), spawnPosition.y(), spawnPosition.z(), spawnPosition.yaw(), spawnPosition.pitch());
-        } else {
-            spawn = new Pos(0, 1, 0);
-        }
+        Pos spawn = MinestomMaths.toPos(info().spawn());
 
         loadChunk(spawn).join();
 

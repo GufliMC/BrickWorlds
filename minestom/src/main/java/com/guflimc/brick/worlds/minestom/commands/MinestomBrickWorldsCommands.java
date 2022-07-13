@@ -5,12 +5,11 @@ import cloud.commandframework.annotations.CommandMethod;
 import cloud.commandframework.annotations.suggestions.Suggestions;
 import cloud.commandframework.context.CommandContext;
 import com.guflimc.brick.i18n.api.I18nAPI;
-import com.guflimc.brick.worlds.api.math.Position;
+import com.guflimc.brick.maths.minestom.api.MinestomMaths;
 import com.guflimc.brick.worlds.minestom.MinestomBrickWorldManager;
 import com.guflimc.brick.worlds.minestom.api.world.MinestomGeneratorRegsitry;
 import com.guflimc.brick.worlds.minestom.api.world.MinestomWorld;
 import net.kyori.adventure.audience.Audience;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public class MinestomBrickWorldsCommands {
 
     @CommandMethod("bw save")
     public void save(Player sender) {
-        if ( sender.getInstance() instanceof MinestomWorld world ) {
+        if (sender.getInstance() instanceof MinestomWorld world) {
             I18nAPI.get(this).send(sender, "cmd.save", world.info().name());
             world.save();
         }
@@ -42,9 +41,8 @@ public class MinestomBrickWorldsCommands {
 
     @CommandMethod("bw setspawn")
     public void setspawn(Player sender) {
-        if ( sender.getInstance() instanceof MinestomWorld world ) {
-            Pos pos = sender.getPosition();
-            world.info().setSpawn(new Position(pos.x(), pos.y(), pos.z(), pos.yaw(), pos.pitch()));
+        if (sender.getInstance() instanceof MinestomWorld world) {
+            world.info().setSpawn(MinestomMaths.toPosition(sender.getPosition()));
             I18nAPI.get(this).send(sender, "cmd.setspawn", world.info().name());
         }
     }
@@ -52,7 +50,7 @@ public class MinestomBrickWorldsCommands {
     @CommandMethod("bw teleport|tp <world>")
     public void teleport(Player sender, @Argument(value = "world", suggestions = "loadedWorld") String world) {
         Optional<MinestomWorld> worldOptional = manager.worldByName(world);
-        if ( worldOptional.isEmpty() ) {
+        if (worldOptional.isEmpty()) {
             I18nAPI.get(this).send(sender, "cmd.error.args.world", world);
             return;
         }
@@ -63,7 +61,7 @@ public class MinestomBrickWorldsCommands {
 
     @CommandMethod("bw create <world>")
     public void create(Audience sender, @Argument(value = "world") String world) {
-        if ( manager.worldInfoByName(world).isPresent() ) {
+        if (manager.worldInfoByName(world).isPresent()) {
             I18nAPI.get(this).send(sender, "cmd.create.exists", world);
             return;
         }
@@ -73,8 +71,8 @@ public class MinestomBrickWorldsCommands {
     }
 
     @CommandMethod("bw create <world> <generator>")
-    public void create(Audience sender, @Argument(value = "world") String world, @Argument(value="generator", suggestions = "generator") String generator) {
-        if ( manager.worldInfoByName(world).isPresent() ) {
+    public void create(Audience sender, @Argument(value = "world") String world, @Argument(value = "generator", suggestions = "generator") String generator) {
+        if (manager.worldInfoByName(world).isPresent()) {
             I18nAPI.get(this).send(sender, "cmd.create.exists", world);
             return;
         }
