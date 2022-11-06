@@ -2,6 +2,7 @@ package com.wollymc.brick.worlds.common.commands;
 
 import cloud.commandframework.annotations.Argument;
 import cloud.commandframework.annotations.CommandMethod;
+import cloud.commandframework.annotations.CommandPermission;
 import cloud.commandframework.annotations.suggestions.Suggestions;
 import cloud.commandframework.context.CommandContext;
 import com.guflimc.brick.i18n.api.I18nAPI;
@@ -39,6 +40,7 @@ public class BrickWorldsCommands {
     }
 
     @CommandMethod("bw list")
+    @CommandPermission("brick.worlds.list")
     public void list(Audience sender) {
         List<Component> result = new ArrayList<>();
         Collection<String> loadedWorlds = manager.loadedWorlds().stream()
@@ -58,6 +60,7 @@ public class BrickWorldsCommands {
     }
 
     @CommandMethod("bw load <world>")
+    @CommandPermission("brick.worlds.load")
     public void load(Audience sender, @Argument(value = "world", suggestions = "world") String world) {
         if (manager.worldInfoByName(world).isEmpty()) {
             I18nAPI.get(this).send(sender, "cmd.error.args.world", world);
@@ -70,6 +73,7 @@ public class BrickWorldsCommands {
     }
 
     @CommandMethod("bw info <world>")
+    @CommandPermission("brick.worlds.info")
     public void info(Audience sender, @Argument(value = "world", suggestions = "world") String world) {
         Optional<WorldInfo> infoOptional = manager.worldInfoByName(world);
         if (infoOptional.isEmpty()) {
@@ -84,6 +88,7 @@ public class BrickWorldsCommands {
     }
 
     @CommandMethod("bw unload <world>")
+    @CommandPermission("brick.worlds.unload")
     public void unload(Audience sender, @Argument(value = "world", suggestions = "loadedWorld") String world) {
         manager.unloadWorld(world);
 
@@ -91,6 +96,7 @@ public class BrickWorldsCommands {
     }
 
     @CommandMethod("bw save-all")
+    @CommandPermission("brick.worlds.save")
     public void saveAll(Audience sender) {
         I18nAPI.get(this).send(sender, "cmd.save-all");
         manager.saveAll();

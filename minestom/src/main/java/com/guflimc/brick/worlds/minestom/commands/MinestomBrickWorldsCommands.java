@@ -2,6 +2,7 @@ package com.guflimc.brick.worlds.minestom.commands;
 
 import cloud.commandframework.annotations.Argument;
 import cloud.commandframework.annotations.CommandMethod;
+import cloud.commandframework.annotations.CommandPermission;
 import cloud.commandframework.annotations.suggestions.Suggestions;
 import cloud.commandframework.context.CommandContext;
 import com.guflimc.brick.i18n.api.I18nAPI;
@@ -32,6 +33,7 @@ public class MinestomBrickWorldsCommands {
     }
 
     @CommandMethod("bw save")
+    @CommandPermission("brick.worlds.save")
     public void save(Player sender) {
         if (sender.getInstance() instanceof MinestomWorld world) {
             I18nAPI.get(this).send(sender, "cmd.save", world.info().name());
@@ -40,6 +42,7 @@ public class MinestomBrickWorldsCommands {
     }
 
     @CommandMethod("bw setspawn")
+    @CommandPermission("brick.worlds.setspawn")
     public void setspawn(Player sender) {
         if (sender.getInstance() instanceof MinestomWorld world) {
             world.info().setSpawn(MinestomMaths.toPosition(sender.getPosition()));
@@ -48,6 +51,7 @@ public class MinestomBrickWorldsCommands {
     }
 
     @CommandMethod("bw teleport|tp <world>")
+    @CommandPermission("brick.worlds.teleport")
     public void teleport(Player sender, @Argument(value = "world", suggestions = "loadedWorld") String world) {
         Optional<MinestomWorld> worldOptional = manager.worldByName(world);
         if (worldOptional.isEmpty()) {
@@ -60,6 +64,7 @@ public class MinestomBrickWorldsCommands {
     }
 
     @CommandMethod("bw create <world>")
+    @CommandPermission("brick.worlds.create")
     public void create(Audience sender, @Argument(value = "world") String world) {
         if (manager.worldInfoByName(world).isPresent()) {
             I18nAPI.get(this).send(sender, "cmd.create.exists", world);
@@ -71,6 +76,7 @@ public class MinestomBrickWorldsCommands {
     }
 
     @CommandMethod("bw create <world> <generator>")
+    @CommandPermission("brick.worlds.create")
     public void create(Audience sender, @Argument(value = "world") String world, @Argument(value = "generator", suggestions = "generator") String generator) {
         if (manager.worldInfoByName(world).isPresent()) {
             I18nAPI.get(this).send(sender, "cmd.create.exists", world);
