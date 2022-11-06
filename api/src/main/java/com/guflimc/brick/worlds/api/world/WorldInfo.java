@@ -2,8 +2,8 @@ package com.guflimc.brick.worlds.api.world;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.guflimc.brick.maths.api.geo.Location;
-import com.guflimc.brick.maths.api.geo.Position;
+import com.guflimc.brick.maths.api.geo.pos.Location;
+import com.guflimc.brick.maths.api.geo.pos.Position;
 import marcono1234.gson.recordadapter.RecordTypeAdapterFactory;
 import org.jetbrains.annotations.NotNull;
 

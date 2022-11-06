@@ -27,3 +27,8 @@ apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-default.gradle
 apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-javadoc.gradle'
 apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-shadow.gradle'
 apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-publish.gradle'
+
+if ( System.getProperty("os.name").toLowerCase().contains("windows") ) {
+    ext.set("shadowCopy", [(project(':minestom')): 'C:/Users/joris/Nextcloud/WollyMC/testservers/lobby/extensions'])
+    apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-shadow-copy.gradle'
+}

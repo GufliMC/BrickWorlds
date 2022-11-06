@@ -43,10 +43,3 @@ minestomExtension {
     entrypoint = "com.guflimc.brick.worlds.minestom.MinestomBrickWorlds"
     dependencies = ["BrickI18n"]
 }
-
-shadowJar.doLast {
-    copy {
-        from "build/libs/" + archiveFileName.get()
-        into 'C:\\Users\\joris\\Nextcloud\\WollyMC\\testservers\\lobby\\extensions'
-    }
-}
